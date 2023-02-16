@@ -1,6 +1,7 @@
-function Header(props){
-    const {titulo} = props;
-    return <h1>{titulo}</h1>;
+function Header() {
+    return (
+        <h1>ToDo App</h1>
+    );
 }
 
 export default Header;
