@@ -1,11 +1,15 @@
 function Task(props){
+  
+  const { id, nombre, handleClickEditar } = props;
 
-  const { id, nombre } = props;
 
+ 
   return (
     <li>
-      <label htmlFor={id}>{nombre}</label>
       <input type="checkbox" id={id} />
+      <label htmlFor={id}>{nombre}</label>
+      <button onClick={() => handleClickEditar(id, nombre)}>Editar</button>
+      <button>Eliminar</button>
     </li>
   )
 }
