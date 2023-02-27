@@ -2,32 +2,58 @@ import React, {useState, useEffect} from 'react';
 import Header from './components/Header';
 import TaskList from './components/TaskList';
 
-const TASKS = [
-  { id:1, descripcion:'Tarea 1'},
-  { id:2, descripcion:'Tarea 2'},
-  { id:3, descripcion:'Tarea 3'}
-];
-
 function App() {
-
-  const [tareas, setTareas] = useState(TASKS)
+  
+  const [tareas, setTareas] = useState([])
   const [nuevaTarea, setNuevaTarea] = useState('')
 
-  const handleClickAgregar = (e) => {
-    e.preventDefault()
-    setTareas([...tareas, {id: new Date(), descripcion: nuevaTarea}])
-    console.log(tareas)
-  }
+  useEffect(() => {
+    const lista = localStorage.getItem('miLista')
+    if (lista) {
+      setTareas(JSON.parse(lista))
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('miLista', JSON.stringify(tareas))
+  }, [tareas])
+
+ const handleChangeCompletado = (completado, id) => {
+  let nuevoEstadoCompletado = tareas.map((tarea) => {
+    if (tarea.id === id) {
+      return {id: tarea.id, descripcion: tarea.descripcion, estaCompletada: completado}
+    }
+    return tarea;
+  })
+  setTareas(nuevoEstadoCompletado)
+ }
 
   const handleChange = (e) => {
     setNuevaTarea(e.target.value)
-    console.log(nuevaTarea)
+  }
+
+  const handleClickAgregar = (e) => {
+    e.preventDefault()
+    setTareas([...tareas, {id: new Date().getTime().toString(), descripcion: nuevaTarea, estaCompletada: false}])
   }
 
   const handleClickEditar = (id, nombre) => {
-    let entrada = prompt(nombre, nombre);
-    let nuevasTareas = [...tareas]
+    let entrada = prompt('Edita la tarea: ', nombre);
 
+    if (entrada) { //Este if lo uso por si de pronto no ingreso nada en el prompt, para evitar un null
+      let tareaEditada = tareas.map((tarea) => {
+        if(tarea.id === id){
+          return {id: tarea.id, descripcion: entrada, estaCompletada: tarea.estaCompletada} // Si el id coincide entonces en la descripcion ingresa la entrada
+        }
+        return tarea; // si no se cumple la condición retorna la misma tarea (es decir el mismo objeto que se itera)
+      })
+      setTareas(tareaEditada)
+    }    
+  }
+
+  const handleClickEliminar = (id) => {
+    let tareasNoBorradas = tareas.filter((tarea) => tarea.id !== id);
+    setTareas(tareasNoBorradas)
   }
 
   return (
@@ -38,19 +64,9 @@ function App() {
         <button onClick={handleClickAgregar} type='submit'>Agregar</button>
       </form>
       
-      <TaskList listaDeTareas={tareas} handleClickEditar={handleClickEditar} />
+      <TaskList listaDeTareas={tareas} handleChangeCompletado={handleChangeCompletado} handleClickEditar={handleClickEditar} handleClickEliminar={handleClickEliminar} />
     </div>
   );
 }
 
 export default App;
-
-    // voy a usar un map para recorrer cada objeto dentro de mi array comparando el id del parametro (linea 27) con el id que está dentro de las propiedades de los objetos que recorro y luego usando algo que es como la recursividad editar solamente ese objeto en particular
-
- // const lista = localStorage.getItem('miLista')
-  // console.log(lista)
-  // const [tareas, setTareas] = useState(lista === null ? [] : JSON.parse(lista))
-  
-  // localStorage.setItem('miLista', JSON.stringify(TASKS))
-
-  // useEffect()

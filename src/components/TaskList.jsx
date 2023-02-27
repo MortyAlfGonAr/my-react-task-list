@@ -1,7 +1,7 @@
 import Task from "./Task";
 
 function TaskList(props){
-  const { listaDeTareas, handleClickEditar } = props;
+  const { listaDeTareas,  handleChangeCompletado, handleClickEditar, handleClickEliminar } = props;
 
   return(
     <ul>
@@ -11,8 +11,10 @@ function TaskList(props){
             key={tarea.id}
             id={tarea.id} 
             nombre={tarea.descripcion}
-            handleClickEditar={handleClickEditar} 
-            // estaCompletada={tarea.completada}
+            estaCompletada={tarea.completada}
+            handleChangeCompletado={handleChangeCompletado}
+            handleClickEditar={handleClickEditar}
+            handleClickEliminar={handleClickEliminar}
           />
         ))
       }
