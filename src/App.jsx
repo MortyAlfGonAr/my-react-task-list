@@ -40,12 +40,12 @@ function App() {
   const handleClickEditar = (id, nombre) => {
     let entrada = prompt('Edita la tarea: ', nombre);
 
-    if (entrada) { //Este if lo uso por si de pronto no ingreso nada en el prompt, para evitar un null
+    if (entrada) { 
       let tareaEditada = tareas.map((tarea) => {
         if(tarea.id === id){
-          return {id: tarea.id, descripcion: entrada, estaCompletada: tarea.estaCompletada} // Si el id coincide entonces en la descripcion ingresa la entrada
+          return {id: tarea.id, descripcion: entrada, estaCompletada: tarea.estaCompletada} 
         }
-        return tarea; // si no se cumple la condición retorna la misma tarea (es decir el mismo objeto que se itera)
+        return tarea;
       })
       setTareas(tareaEditada)
     }    
@@ -60,7 +60,7 @@ function App() {
     <div>
       <Header />
       <form action="">
-        <input type='text' onChange={handleChange} value={nuevaTarea} />
+        <input type='text' onChange={handleChange} placeholder='Nueva tarea' value={nuevaTarea} />
         <button onClick={handleClickAgregar} type='submit'>Agregar</button>
       </form>
       
