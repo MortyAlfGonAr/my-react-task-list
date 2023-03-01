@@ -3,16 +3,10 @@ import Header from './components/Header';
 import TaskList from './components/TaskList';
 
 function App() {
+  const lista = localStorage.getItem('miLista')
   
-  const [tareas, setTareas] = useState([])
+  const [tareas, setTareas] = useState(!lista ? [] : JSON.parse(lista))
   const [nuevaTarea, setNuevaTarea] = useState('')
-
-  useEffect(() => {
-    const lista = localStorage.getItem('miLista')
-    if (lista) {
-      setTareas(JSON.parse(lista))
-    }
-  }, [])
 
   useEffect(() => {
     localStorage.setItem('miLista', JSON.stringify(tareas))
@@ -35,6 +29,7 @@ function App() {
   const handleClickAgregar = (e) => {
     e.preventDefault()
     setTareas([...tareas, {id: new Date().getTime().toString(), descripcion: nuevaTarea, estaCompletada: false}])
+    setNuevaTarea('') // Para que me deje vacio el input
   }
 
   const handleClickEditar = (id, nombre) => {
@@ -60,7 +55,7 @@ function App() {
     <div>
       <Header />
       <form action="">
-        <input type='text' onChange={handleChange} value={nuevaTarea} />
+        <input type='text' onChange={handleChange} value={nuevaTarea} placeholder='Nueva tarea' />
         <button onClick={handleClickAgregar} type='submit'>Agregar</button>
       </form>
       
