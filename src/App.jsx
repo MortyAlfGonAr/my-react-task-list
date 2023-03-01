@@ -3,16 +3,10 @@ import Header from './components/Header';
 import TaskList from './components/TaskList';
 
 function App() {
+  const lista = localStorage.getItem('miLista')
   
-  const [tareas, setTareas] = useState([])
+  const [tareas, setTareas] = useState(!lista ? [] : JSON.parse(lista))
   const [nuevaTarea, setNuevaTarea] = useState('')
-
-  useEffect(() => {
-    const lista = localStorage.getItem('miLista')
-    if (lista) {
-      setTareas(JSON.parse(lista))
-    }
-  }, [])
 
   useEffect(() => {
     localStorage.setItem('miLista', JSON.stringify(tareas))
@@ -35,17 +29,18 @@ function App() {
   const handleClickAgregar = (e) => {
     e.preventDefault()
     setTareas([...tareas, {id: new Date().getTime().toString(), descripcion: nuevaTarea, estaCompletada: false}])
+    setNuevaTarea('') // Para que me deje vacio el input
   }
 
   const handleClickEditar = (id, nombre) => {
     let entrada = prompt('Edita la tarea: ', nombre);
 
-    if (entrada) { 
+    if (entrada) { //Este if lo uso por si de pronto no ingreso nada en el prompt, para evitar un null
       let tareaEditada = tareas.map((tarea) => {
         if(tarea.id === id){
-          return {id: tarea.id, descripcion: entrada, estaCompletada: tarea.estaCompletada} 
+          return {id: tarea.id, descripcion: entrada, estaCompletada: tarea.estaCompletada} // Si el id coincide entonces en la descripcion ingresa la entrada
         }
-        return tarea;
+        return tarea; // si no se cumple la condición retorna la misma tarea (es decir el mismo objeto que se itera)
       })
       setTareas(tareaEditada)
     }    
@@ -60,7 +55,7 @@ function App() {
     <div>
       <Header />
       <form action="">
-        <input type='text' onChange={handleChange} placeholder='Nueva tarea' value={nuevaTarea} />
+        <input type='text' onChange={handleChange} value={nuevaTarea} placeholder='Nueva tarea' />
         <button onClick={handleClickAgregar} type='submit'>Agregar</button>
       </form>
       

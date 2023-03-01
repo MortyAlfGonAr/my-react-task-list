@@ -11,7 +11,7 @@ function TaskList(props){
             key={tarea.id}
             id={tarea.id} 
             nombre={tarea.descripcion}
-            estaCompletada={tarea.completada}
+            estaCompletada={tarea.estaCompletada}
             handleChangeCompletado={handleChangeCompletado}
             handleClickEditar={handleClickEditar}
             handleClickEliminar={handleClickEliminar}
