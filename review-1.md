@@ -7,8 +7,8 @@ Es una aplicación de lista de tareas (ToDo App) que le servirá a sus usuarios 
 Entre sus funcionalidades se encuentran:
 
 - Agregar tareas que necesitas completar.
-- Marcar tareas como completadas cuando se hayan terminado o desmarcarlas si aún no se completan del todo.
+- Marcar tareas como completadas cuando se hayan terminado o desmarcarlas si asi lo desea el usuario.
 - Editar la descripción de cada tarea.
-- Eliminar cada tarea en cualquier momento que el usuario lo desee.
+- Eliminar cada tarea en cualquier momento que el usuario lo desee (antes o después de haberla completado).
 
 En resumen, esta ToDo App te ayuda a ser más organizado/a y productivo/a al proporcionarte una manera fácil y conveniente de administrar todas tus tareas en un solo lugar.
